@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 //require this to read and write my ReadME file
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -24,10 +25,11 @@ const questions = [
     name: 'installation',
     validate: (value) => { if(value){return true} else {return 'Please enter the steps needed to install your project.'}}
   },
+
   {
     type: 'input',
     message: 'Provide instructions and examples for use.',
-    name: 'instructions',
+    name: 'usage',
     validate: (value) => {if(value){return true} else {return 'Please enter the instructions needed for your project.'}}
   },
   
@@ -41,6 +43,20 @@ const questions = [
   
   {
     type: 'input',
+    message: 'Please enter the guidlines on how you would like other developers to contribute to your application.',
+    name: 'contributing',
+    validate: (value) => {if(value){return true} else {return 'Please enter the tests for your application to continue.'}}
+  },
+  
+  {
+    type: 'input',
+    message: 'Enter the tests for your application. Then provide examples on how to run them.',
+    name: 'tests',
+    validate: (value) => {if(value){return true} else {return 'Please enter the tests for your application to continue.'}}
+  },
+
+  {
+    type: 'input',
     message: 'Enter your github username.',
     name: 'github',
     validate: (value) => {if(value){return true} else {return 'Please enter your github username to continue.'}}
@@ -49,23 +65,20 @@ const questions = [
   {
     type: 'input',
     message: 'Enter your email address.',
-    name: 'email-address',
+    name: 'email',
     validate: (value) => {if(value){return true} else {return 'Please enter your email address to finish your README.md file.'}}
   },
 ];
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-  fs.writeFile('README.md', readme, (err) => {
+  fs.writeFile(fileName, data, (err) => {
     if (err) {
       console.error(err);
     } else {
        console.log('README.md file was created successfully!');
-      }
-        
-    rl.close();
+    }
   });
-
 }
 
 // TODO: Create a function to initialize app
@@ -73,7 +86,7 @@ function init() {
   inquirer.prompt(questions)
   .then((data) => {
       let projectInfo = generateMarkdown(data)
-      writeToFile('readMe.md', projectInfo)
+      writeToFile('README.md', projectInfo)
   }).catch(function(err) {
       console.log(err)
   });
