@@ -37,7 +37,7 @@ const questions = [
     type: "list",
     message: "If any, what license(s) does your project use?",
     name: "license",
-    choices: ['The MIT License', 'The GPL License', 'Apache License', 'GNU License', 'N/A'],
+    choices: ['The MIT License', 'GNU GPL v2', 'Apache License', 'ISC License', 'The Unlicense', 'N/A'],
     validate: (value) => { if(value){return true} else {return 'Please select an option to continue. If your project has no license select the N/A option.'}}
   },
   
